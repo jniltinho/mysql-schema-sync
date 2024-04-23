@@ -1,5 +1,7 @@
 # mysql-schema-sync
 
+Ferramenta de sincronização automática de estrutura de tabela MySQL (atualmente suporta apenas sincronização de campos e índices, funções avançadas como particionamento ainda não são suportadas)
+
 MySQL Schema 自动同步工具  
 
 用于将 `线上` 数据库 Schema **变化**同步到 `本地测试环境`!
