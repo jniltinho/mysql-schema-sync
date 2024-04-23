@@ -2,7 +2,7 @@
 
 Ferramenta de sincronização automática de estrutura de tabela MySQL (atualmente suporta apenas sincronização de campos e índices, funções avançadas como particionamento ainda não são suportadas)
 
-MySQL Schema 自动同步工具  
+Ferramenta de sincronização automática do MySQL Schema  
 
 用于将 `线上` 数据库 Schema **变化**同步到 `本地测试环境`!
 只同步 Schema、不同步数据。
@@ -19,28 +19,28 @@ MySQL Schema 自动同步工具
 8. 在该项目的基础上修复了比对过程中遇到分区表会终止后续操作的问题，支持分区表，对于分区表，会同步除了分区以外的变更。
 9. 支持每条 ddl 只会执行单个的修改，目的兼容tidb ddl问题 Unsupported multi schema change，通过single_schema_change字段控制，默认关闭。
 
-## 安装
+## Instalar
 
 ```bash
 go install github.com/hidu/mysql-schema-sync@master
 ```
 
-## 配置
+## Configuração
 
-参考 默认配置文件  config.json 配置同步源、目的地址。  
-修改邮件接收人  当运行失败或者有表结构变化的时候你可以收到邮件通知。  
+Consulte o arquivo de configuração padrão config.json para configurar os endereços de origem e destino de sincronização.
+Modificar destinatários de email Você pode receber notificações por email quando a operação falhar ou a estrutura da tabela for alterada.  
 
-默认情况不会对多出的**表、字段、索引、外键**删除。若需要删除**字段、索引、外键** 可以使用 `-drop` 参数。
+Por padrão, tabelas, campos, índices e chaves estrangeiras extras não serão excluídos. Se precisar excluir campos, índices e chaves estrangeiras, você pode usar o parâmetro `-drop`.
 
 配置示例(config.json):  
 
 ```
 {
-      //source：同步源
+      //source：fonte de sincronização
       "source":"test:test@(127.0.0.1:3306)/test_0",
-      //dest：待同步的数据库
+      //dest：Banco de dados a ser sincronizado
       "dest":"test:test@(127.0.0.1:3306)/test_1",
-      //alter_ignore： 同步时忽略的字段和索引
+      //alter_ignore： Campos e índices ignorados durante a sincronização
       "alter_ignore":{
         "tb1*":{
             "column":["aaa","a*"],
@@ -52,7 +52,7 @@ go install github.com/hidu/mysql-schema-sync@master
       "tables":[],
       //  tables_ignore: table to ignore check schema,default is Null :["order_*","goods"]
       "tables_ignore": [],
-      //有变动或者失败时，邮件接收人
+      //Quando há uma alteração ou falha, o destinatário do e-mail
       "email":{
           "send_mail":false,
          "smtp_host":"smtp.163.com:25",
@@ -74,19 +74,19 @@ single_schema_change：是否每个ddl只执行单个修改
 
 ### 运行
 
-### 直接运行
+### Execute diretamente
 
 ```shell
 mysql-schema-sync -conf mydb_conf.json -sync
 ```
 
-### 预览并生成变更sql
+### Visualizar e gerar alteração sql
 
 ```shell
 mysql-schema-sync -conf mydb_conf.json 2>/dev/null >db_alter.sql
 ```
 
-### 使用shell调度
+### Usar agendamento de shell
 
 ```shell
 bash check.sh
@@ -95,7 +95,7 @@ bash check.sh
 每个json文件配置一个目的数据库，check.sh脚本会依次运行每份配置。
 log存储在当前的log目录中。
 
-### 自动定时运行
+### Operação programada automaticamente
 
 添加crontab 任务
 
@@ -103,13 +103,13 @@ log存储在当前的log目录中。
 30 ****  cd /your/path/xxx/ && bash check.sh >/dev/null 2>&1
 ```
 
-### 参数说明
+### Descrição do parâmetro
 
 ```shell
 mysql-schema-sync [-conf] [-dest] [-source] [-sync] [-drop]
 ```
 
-说明：
+Ilustrar：
 
 ```shell
 mysql-schema-sync -help  
