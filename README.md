@@ -4,20 +4,20 @@ Ferramenta de sincronização automática de estrutura de tabela MySQL (atualmen
 
 Ferramenta de sincronização automática do MySQL Schema  
 
-用于将 `线上` 数据库 Schema **变化**同步到 `本地测试环境`!
-只同步 Schema、不同步数据。
+Usado para sincronizar **alterações** do esquema do banco de dados `online` para o `ambiente de teste local`!
+Apenas o esquema está sincronizado, os dados não estão sincronizados.
 
 支持功能：  
 
-1. 同步**新表**  
-2. 同步**字段** 变动：新增、修改  
-3. 同步**索引** 变动：新增、修改
-4. 支持**预览**（只对比不同步变动）  
-5. **邮件**通知变动结果
-6. 支持屏蔽更新**表、字段、索引、外键**  
-7. 支持本地比线上额外多一些表、字段、索引、外键
-8. 在该项目的基础上修复了比对过程中遇到分区表会终止后续操作的问题，支持分区表，对于分区表，会同步除了分区以外的变更。
-9. 支持每条 ddl 只会执行单个的修改，目的兼容tidb ddl问题 Unsupported multi schema change，通过single_schema_change字段控制，默认关闭。
+1. Sincronizar **nova tabela**
+2. Sincronizar alterações de **campos**: novo, modificado
+3. Sincronizar alterações de **índice**: novo, modificado
+4. Suporte **Visualização** (compare apenas alterações assíncronas)
+5. Notificação por **e-mail** dos resultados da alteração
+6. Suporta atualizações de blindagem **tabelas, campos, índices, chaves estrangeiras**
+7. Suporta mais tabelas, campos, índices e chaves estrangeiras locais do que online
+8. Com base neste projeto, o problema de que as operações subsequentes serão encerradas se uma tabela de partição for encontrada durante o processo de comparação é corrigido. Para tabelas de partição, outras alterações além das partições serão sincronizadas.
+9. O suporte para que cada ddl execute apenas uma única modificação, visando ser compatível com problemas de ddl tidb A alteração de multi esquema não suportada, controlada pelo campo single_schema_change, está desativada por padrão.
 
 ## Instalar
 
@@ -32,7 +32,7 @@ Modificar destinatários de email Você pode receber notificações por email qu
 
 Por padrão, tabelas, campos, índices e chaves estrangeiras extras não serão excluídos. Se precisar excluir campos, índices e chaves estrangeiras, você pode usar o parâmetro `-drop`.
 
-配置示例(config.json):  
+Exemplo de configuração (config.json):
 
 ```
 {
@@ -63,7 +63,7 @@ Por padrão, tabelas, campos, índices e chaves estrangeiras extras não serão 
 }
 ```
 
-### JSON 配置项说明
+### Descrição do item de configuração JSON
 
 source: 数据库同步源  
 dest:   待同步的数据库  
